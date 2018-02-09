@@ -21,4 +21,9 @@ sed -i s+i2c_adapter\ =\ \<\&i2c2\>+2c_adapter\ =\ \<\&i2c2\>+g `grep "i2c_adapt
 552  dpkg -L libopencv-core2.4
 553  sudo apt-cache search opencv |grep high
 
+===============================================================================
+alias                                  //list alisa in system
+alias grep='grep --color=auto'
+
+
 
