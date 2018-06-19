@@ -3,6 +3,8 @@ git clone https://github.com/yhong061/sample.git
 
 git config --global user.email yhong@actions-semi.com
 git config --global user.name yhong061
+ssh-keygen -t rsa -C yhong061
+
 
 git add file
 git commit -sm ""
@@ -87,6 +89,32 @@ git checkout BRNACH_NAME_HERE
 git archive -o ../updated.zip HEAD $(git diff --name-only HEAD^)  //save the changed filename between HEAD and HEAD^
 git archive -o ../updated.zip NEW_COMMIT_ID $(git diff --name-only OLD_COMMIT_ID NEW_COMMIT_ID)  //save the changed file between NEW and OLD commit ID
 
+==============================
+git reset --hard commit-id  //回退到指定id, 代码为id对应地情况
+git reset --soft commit-id  //回退到指定id, 代码为HEAD到id之间地所有修改
+
+==============================
+fatal: remote error:  
+You can't push to git://github.com/user_name/user_repo.git  
+Use git@github.com:user_name/user_repo.git 
+------------------------------
+解决办法:
+git remote rm origin
+git remote add origin git@github.com:yhong061/self.git
+git branch --set-upstream-to=origin/master
+git push origin master
+
+==============================
+==============================
+==============================
+==============================
+==============================
+==============================
+==============================
+==============================
+==============================
+==============================
+==============================
 ==============================
 ==============================
 ==============================
