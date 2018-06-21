@@ -1,3 +1,66 @@
+
+===============================================================================
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx
+Device#26:  bus:dev.fn 04:00.0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/ / /g'
+Device#26:  bus:dev.fn 04:00.0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g'
+Device#26   bus dev.fn 04 00.0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g'
+Device#26   bus dev fn 04 00 0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $5}'
+04
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $0}'
+Device#26   bus dev fn 04 00 0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $1}'
+Device#26
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $4}'
+fn
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $3}'
+dev
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $2}'
+bus
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $6}'
+00
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $7}'
+0
+
+===============================================================================
+busnum=$(pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $5}')
+devnum=$(pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $6}')
+funid=$(pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $7}')
+
+byte4=$(pcitool --read --bus=$busnum--dev=$devnum --func=$funid --offset=0x10 --count=4 | grep 0x | sed 's/0x/ /g' | awk '{print $5}')
+byte3=$(pcitool --read --bus=$busnum--dev=$devnum --func=$funid --offset=0x10 --count=4 | grep 0x | sed 's/0x/ /g' | awk '{print $4}')
+byte2=$(pcitool --read --bus=$busnum--dev=$devnum --func=$funid --offset=0x10 --count=4 | grep 0x | sed 's/0x/ /g' | awk '{print $3}')
+byte1=$(pcitool --read --bus=$busnum--dev=$devnum --func=$funid --offset=0x10 --count=4 | grep 0x | sed 's/0x/ /g' | awk '{print $2}')
+
+FPGA_BASE_ADDR=0x$byte4$byte3$byte2$byte1
+
+FPGA_SPI_RES=$(printf "0x%x" $(($FPGA_BASE_ADDR+0x7040)))
+FPGA_SPI_CR=$(printf "0x%x" $(($FPGA_BASE_ADDR+0x7060)))
+FPGA_SPI_SLAVE_SELECT=$(printf "0x%x" $(($FPGA_BASE_ADDR+0x7070))) 
+FPGA_SPI_STATUSREG=$(printf "0x%x" $(($FPGA_BASE_ADDR+0x7064)))
+FPGA_SPI_DATARX=$(printf "0x%x" $(($FPGA_BASE_ADDR+0x706c)))
+FPGA_SPI_DATATX=$(printf "0x%x" $(($FPGA_BASE_ADDR+0x7068))) 
+FPGA_SPI_DATARXBUF=$(printf "0x%x" $(($FPGA_BASE_ADDR+0x7078))) 
+
+
+===============================================================================
+
+
 sed -i 's/signal/temp/g' /usr/local/bin/test.txt  	//将文件test.txt中的signal替换成temp
 sed -i "s/signal/temp/g" /usr/local/bin/test.txt  	//将文件test.txt中的signal替换成temp
 
