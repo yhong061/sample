@@ -76,6 +76,11 @@ syntax on           "语法高亮
 set hlsearch        "搜索高亮
 filetype indent plugin on   "依文件类型设置自动缩进
 
+"自动打开跳到上次的光标位置
+if has("autocmd")
+      au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
 
 
 

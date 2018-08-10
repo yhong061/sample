@@ -52,12 +52,12 @@ git push origin  master
 git remote -v  //list remote name
 
 ==============================
-git blame kernel/xc6130_reg/readme.txt  //list file's modify author per lines
 
 ==============================
 git log --oneline //display log in one line
 git log --graph   //display log in a graph mode
 git log -all      //display all branchs log
+git blame kernel/xc6130_reg/readme.txt  //list file's modify author per lines
 
 ==============================
 git reflog  //list HEAD pointer's trajectory
