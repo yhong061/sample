@@ -58,6 +58,7 @@ git remote -v  //list remote name
 git log --oneline //display log in one line
 git log --graph   //display log in a graph mode
 git log -all      //display all branchs log
+git log --name-status   //display files changed
 git blame kernel/xc6130_reg/readme.txt  //list file's modify author per lines
 
 ==============================
