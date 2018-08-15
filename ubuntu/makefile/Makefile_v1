@@ -1,0 +1,38 @@
+# Makefile的规则:
+#     target ... : prerequisites ...
+#                 command
+# Makefile中的命令，必须要以[Tab]键开始
+
+# 1. make命令找Makefile文件中的第一个目标文件edit, 并把这个文件作为最终
+#    的目标文件
+# 2. 如果edit文件不存在，或是edit所依赖的后面的 .o 文件的文件修改时间要
+#    比edit这个文件新，那么，他就会执行后面所定义的命令来生成edit这个文
+#    件。
+# 3. 如果edit所依赖的.o文件也不存在，那么make会在当前文件中找目标为.o文
+#    件的依赖性，如果找到则再根据那一个规则生成.o文件。
+
+# 假定一个工程有3个头文件，和8个C文件
+
+edit : main.o kbd.o command.o display.o insert.o search.o files.o \
+	utils.o
+	cc -o edit main.o kbd.o command.o display.o insert.o search.o \
+		files.o utils.o
+
+main.o : main.c defs.h
+	cc -c main.c
+kbd.o : kbd.c defs.h command.h
+	cc -c kbd.c
+command.o : command.c defs.h command.h
+	cc -c command.c
+display.o : display.c defs.h buffer.h
+	cc -c display.c
+insert.o : insert.c defs.h buffer.h
+	cc -c insert.c
+search.o : search.c defs.h buffer.h
+	cc -c search.c
+files.o : files.c defs.h buffer.h command.h
+	cc -c files.c
+utils.o : utils.c defs.h
+	cc -c utils.c
+clean :
+	rm edit main.o kbd.o command.o display.o insert.o search.o files.o utils.o

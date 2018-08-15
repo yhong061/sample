@@ -1,5 +1,9 @@
 
 ===============================================================================
+scp /home/daisy/full.tar.gz root@172.19.2.75:/home/root
+scp root@/172.19.2.75:/home/root/full.tar.gz home/daisy/full.tar.gz
+
+===============================================================================
 
 root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx
 Device#26:  bus:dev.fn 04:00.0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
