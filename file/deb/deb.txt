@@ -1,0 +1,30 @@
+查看:
+dpkg -c xxx.deb // 安装前根据deb文件查看
+dpkg -L debname // 安装后根据包名查看
+
+安装:
+dpkg -i xxx.deb
+
+移除:
+dpkg -r debname
+
+查看某个文件属于哪个deb包:
+dpkg -S filepath
+
+释放安装内容到dirname目录中:
+dpkg -X xxx.deb dirname
+
+释放控制信息到当前目录下的DEBIAN子目录中:
+dpkg -e xxx.deb
+
+控制文件    描述
+control 用了记录软件标识，版本号，平台，依赖信息等数据
+preinst 在解包data.tar.gz前运行的脚本
+postinst    在解包数据后运行的脚本
+prerm   卸载时，在删除文件之前运行的脚本
+postrm  在删除文件之后运行的脚本
+
+制作:
+dpkg -b . ./s5296_x02_0829.deb
+
+

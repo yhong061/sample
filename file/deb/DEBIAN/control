@@ -1,0 +1,8 @@
+Package: dn-diags-s5296-x02.deb
+Version: 0.0.0
+Maintainer: yanahong@celestica.com
+Description: S5296 x02 changed port mapping and fan max speed
+ This package includes a set of diagnostics applications and the configuration files for the S5200-ON switch.
+Architecture: amd64
+Kernel-Version: 3.9.30
+Replaces: ethtool, cpldupgradetool, vmetool, smarttool, flashrom 
