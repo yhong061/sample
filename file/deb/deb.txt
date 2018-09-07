@@ -4,6 +4,10 @@ dpkg -L debname // 安装后根据包名查看
 
 安装:
 dpkg -i xxx.deb
+-----------------------------
+安装失败问题: 正试图覆盖 /etc/dn/diag/default_fan_list.xml，它同时被包含于软件包:
+sudo dpkg -i --force-overwrite s5296_x02_0829.deb
+
 
 移除:
 dpkg -r debname
