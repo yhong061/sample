@@ -10,6 +10,17 @@
 # ├─ abc.py
 # └─ xyz.py
 
+#安装第三方模块，是通过包管理工具pip完成的
+#注意：Mac或Linux上有可能并存Python 3.x和Python 2.x，因此对应的pip命令是pip3
+#第三方库都会在Python官方的pypi.python.org网站注册，要安装一个第三方库，可以在官网或者pypi上搜索
+
+#pip install Pillow
+
+#import sys
+#sys.path  #显示系统的PATH
+#sys.path.append('/Users/michael/my_py_scripts')  #添加搜索目录
+#PYTHONPATH  也可以修改PYTHON的PATH
+
 
 #============================
 # int(): 把str转换成整数
