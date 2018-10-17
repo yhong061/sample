@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+#print('=====map/reduce====')
+#print('=====filter====')
+#print('====sorted====')
+#print('====lambda====')
+#print('====装饰器:decorator====')
+#print('====偏函数: functools.partial====')
+
 #http://docs.python.org/3/library/functions.html
 
 #help([object])
