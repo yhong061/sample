@@ -71,9 +71,7 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 let g:pydiction_location='~/.vim/tools/pydiction/complete-dict'
 set autoindent      "自动缩进
-set tabstop=4       "
 set shiftwidth=4    "Tab键的宽度
-set expandtab
 set number          "显示行号
 nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>     "为方便复制，用<F2>开启/关闭行号显示: 
 set mouse=a         "鼠标单击改变插入点
@@ -81,6 +79,35 @@ set mouse=v         "启用鼠标复制
 syntax on           "语法高亮
 set hlsearch        "搜索高亮
 filetype indent plugin on   "依文件类型设置自动缩进
+set invlist         "set nolist 显示特殊字符
+set expandtab " 将tab键替换成空格  "set noexpandtab
+set tabstop=4 " 设定 tab 长度为 4
+" :set list 显示制表符,显示方式如下设置
+" set listchars=tab:>-,trail:-
+" set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
+
+set ignorecase smartcase " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感
+" set noignorecase //恢复到大小写敏感
+" set nowrapscan " 禁止在搜索到文件两端时重新搜索
+set incsearch " 输入搜索内容时就显示搜索结果
+set hlsearch " 搜索时高亮显示被找到的文本
+" set noerrorbells " 关闭错误信息响铃
+" set novisualbell " 关闭使用可视响铃代替呼叫
+" set t_vb= " 置空错误铃声的终端代码
+" set showmatch " 插入括号时，短暂地跳转到匹配的对应括号
+" set matchtime=2 " 短暂跳转到匹配括号的时间
+" set magic " 设置魔术
+" set hidden " 允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存
+" set guioptions-=T " 隐藏工具栏
+" set guioptions-=m " 隐藏菜单栏
+set smartindent " 开启新行时使用智能自动缩进
+" set backspace=indent,eol,start " 不设定在插入状态无法用退格键和Delete 键删除回车符
+set cmdheight=1 " 设定命令行的行数为 1
+" set laststatus=2 " 显示状态栏 (默认值为 1, 无法显示状态栏)
+" set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\%c:%l/%L%)\ 
+" 设置在状态行显示的信息
+
+
 
 "自动打开跳到上次的光标位置
 if has("autocmd")
@@ -88,7 +115,28 @@ if has("autocmd")
 endif
 
 
+===============================================================================
+searching:
+/pattern       - search forward for pattern
+?pattern       - search backward
+n              - repeat forward search
+N              - repeat backward
 
+:set ignorecase - case insensitive
+:set smartcase  - use case if any caps used 
+:set incsearch  - show match as search proceeds
+:set hlsearch   - search highlighting
+More cool searching tricks:
+
+*               - search for word currently under cursor
+g*              - search for partial word under cursor 
+                  (repeat with n)
+                  ctrl-o, ctrl-i  - go through jump locations
+                  [I              - show lines with matching word under cursor
+Search and replace...
+
+:%s/search_for_this/replace_with_this/    - search whole file and replace
+:%s/search_for_this/replace_with_this/c   - confirm each replace
 ===============================================================================
 vimdiff快捷键:
 dp : 当前文件的内容复制到另一个文件
