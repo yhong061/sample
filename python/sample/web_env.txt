@@ -1,0 +1,6 @@
+https://github.com/michaelliao/awesome-python3-webapp/tree/day-01
+
+pip3.7 install aiohttp
+pip3.7 install jinja2
+get mysql 5.x from web : https://dev.mysql.com/downloads/mysql/5.6.html
+pip3.7 install aiomysql

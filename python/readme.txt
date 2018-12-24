@@ -3,7 +3,8 @@
 =============================
 whttps://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz
 tar -xvf Python-3.7.0.tar.xz
-./configure && make && sudo make altinstall
+./configure --with-ssl
+&& make && sudo make install
 
 python3.7 -V
 
