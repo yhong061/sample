@@ -1,0 +1,104 @@
+unittest工作原理
+#import unittest
+-------------------------------------------------------------------------------
+unittest中最核心的四部分是：TestCase，TestSuite，TestRunner，TestFixture
+
+（1）一个TestCase的实例就是一个测试用例。测试用例就是指一个完整的测试流程，包括
+     测试前准备环境的搭建（setUp），执行测试代码（run），以及测试后环境的还原
+     （tearDown）。元测试（unit test）的本质也就在这里，一个测试用例是一个完整
+     的测试单元，通过运行这个测试单元，可以对某一个问题进行验证。
+     #class TestMathFunc(unittest.TestCase)
+
+（2）而多个测试用例集合在一起，就是TestSuite，而且TestSuite也可以嵌套TestSuite。
+    #suite = unittest.TestSuite()
+    #tests = [TestMathFunc("test_add"), TestMathFunc("test_minus"), 
+              TestMathFunc("test_divide"), TestMathFunc("test_multi")]
+
+（3）TestLoader是用来加载TestCase到TestSuite中的。
+    #suite.addTests(tests)
+
+（4）TextTestRunner是来执行测试用例的，其中的run(test)会执行TestSuite/TestCase中
+     的run(result)方法
+    #runner = unittest.TextTestRunner(verbosity=2)
+    #runner.run(suite)
+
+（5）测试的结果会保存到TextTestResult实例中，包括运行了多少测试用例，成功了多少
+     ，失败了多少等信息。
+    #with open('UnittestTextReport.txt', 'a') as f:
+    #    runner = unittest.TextTestRunner(stream=f, verbosity=2)
+    #    runner.run(suite)
+
+     综上，整个流程就是首先要写好TestCase，
+     然后由TestLoader加载TestCase到TestSuite，
+     然后由TextTestRunner来运行TestSuite，
+     运行的结果保存在TextTestResult中，
+     整个过程集成在unittest.main模块中。
+
+
+
+
+
+
+
+关于输出的几点说明：
+-------------------------------------------------------------------------------
+1、在第一行给出了每一个用例执行的结果的标识，成功是.，失败是F，出错是E，跳过是
+   S。从上面可以看出，测试的执行跟方法的顺序没有关系，divide方法写在了第4个，但
+   是却在第2个执行。
+
+2、每个测试方法均以test开头，否则不能被unittest识别
+
+3、在uniitest.main()中加verbosity参数可以控制输出的错误报告的详细程度，默认是1，
+   如果设为0， 则不输出每一用例的执行结果，即没有上面的结果中的第1行，
+   如果设为2，则输出详细的执行结果.
+
+
+
+
+
+test fixture的setUp和tearDown
+-------------------------------------------------------------------------------
+当遇到要启动一个数据库这种情况时，只想在开始时连接上数据库，在结束时关闭连接。
+那么可以使用setUp和tearDown函数。
+
+class TestDict(unittest.TestCase):
+ 
+    def setUp(self):
+        print 'setUp...'
+              
+    def tearDown(self):
+        print 'tearDown...'
+
+这两个方法在每个测试方法执行前以及执行后执行一次，setUp用来为测试准备环境，
+tearDown用来清理环境，以备后续的测试。
+
+                           
+如果想要在所有case执行之前准备一次环境，并在所有case执行结束之后再清理环境，
+我们可以用setUpClass()与tearDownClass()，代码格式如下：
+
+class TestMathFunc(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print "setUp"
+                                            
+    @classmethod
+    def tearDownClass(cls):
+        print "tearDown"
+
+
+
+
+
+unittest提供了几种方法可以跳过case
+-------------------------------------------------------------------------------
+
+（1）skip装饰器skip装饰器i
+
+一共有三个
+unittest,skip(reason)：无条件跳过
+unittest.skipIf(condition, reason)：当condition为True时跳过
+unittest.skipUnless(condition, reason)：当condition为False时跳过
+
+（2）TestCase.skipTest()方法
+
+-------------------------------------------------------------------------------
