@@ -4,7 +4,9 @@
 #$n:表示第几个参数，$1 表示第一个参数，$2 表示第二个参数 ... 　　
 #$0:当前程序的名称
 #$*:传递给程序的所有参数组成的字符串
-#$@:以"参数1" "参数2" ... 形式保存所有参数
+#$@: what parameters were passed, $1, $2, ...
+#${@:2}: what parameters were passed, $2, $3, ....
+#$?: was last command successful. 0=yes
 
 
 NAME=bash.sh
