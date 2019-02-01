@@ -96,3 +96,22 @@ sed -i s+i2c_adapter\ =\ \<\&i2c2\>+2c_adapter\ =\ \<\&i2c2\>+g `grep "i2c_adapt
 553  sudo apt-cache search opencv |grep high
 
 
+===============================================================================
+===============================================================================
+wc -l
+---------
+root@dellemc-diag-os:/etc/dn/diag# cat /proc/cpuinfo | grep 'CPU'
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+model name      : Intel(R) Xeon(R) D-2123IT CPU @ 2.20GHz
+root@dellemc-diag-os:/etc/dn/diag# cat /proc/cpuinfo | grep 'CPU' | wc -l
+8
+
+
+
+

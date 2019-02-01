@@ -1,7 +1,7 @@
 
 =============================
 =============================
-whttps://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz
+wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz
 tar -xvf Python-3.7.0.tar.xz
 ./configure --with-ssl
 && make && sudo make install
@@ -26,6 +26,16 @@ module help:
 
 =============================
 =============================
+CURDIR = dirname(abspath(__file__))
+sys.path.append(join(CURDIR, '..'))
+
+print("++++call : ", sys._getframe().f_code.co_name)  //print function name
+
+sys.stdout.flush()
+
+rc = atests(*sys.argv[1:])
+def atests(interpreter, *arguments):
+
 =============================
 =============================
 =============================
