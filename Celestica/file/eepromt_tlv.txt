@@ -1,0 +1,112 @@
+
+TLV EEPROM Struct:
+-------------------------------------------------------------------------------
+sizeof(tlvinfo_header_t) = 11
+sizeof(tlvinfo_tlv_s)    = 2
+totallen = sizeof(tlvinfo_header_t) + n * [sizeof(tlvinfo_tlv_s) + tlvinfo_tlv_s.length]
+
+struct __attribute__ ((__packed__)) tlvinfo_header_s {$
+    char    signature[8];   /* 0x00 - 0x07 EEPROM Tag "TlvInfo" */$
+    uint8_t      version;  /* 0x08        Structure version */$
+    uint16_t     totallen; /* 0x09 - 0x0A Length of all data which follows */$
+};$
+struct __attribute__ ((__packed__)) tlvinfo_tlv_s {$
+    uint8_t  type;$
+    uint8_t  length;$
+    uint8_t  value[0];$
+};$
+
+TLV EEPROM Code:
+-------------------------------------------------------------------------------
+TLV Code    TLV Name
+========    =================
+0x21        Product Name
+0x22        Part Number
+0x23        Serial Number
+0x24        Base MAC Address
+0x25        Manufacture Date
+0x26        Device Version
+0x27        Label Revision
+0x28        Platform Name
+0x29        Loader Version
+0x2a        MAC Addresses
+0x2b        Manufacturer
+0x2c        Country Code
+0x2d        Vendor Name
+0x2e        Diag Version
+0x2f        Service Tag
+0xfc        EEPROM Test
+0xfd        Vendor Extension
+0xfe        CRC-32
+
+
+TLV EEPROM Data: 
+-------------------------------------------------------------------------------
+00000000  54 6c 76 49 6e 66 6f 00  01 00 b4 22 06 30 34 56  |TlvInfo....".04V|
+                                            --
+00000010  34 37 56 23 14 43 4e 30  34 56 34 37 56 43 45 53  |47V#.CN04V47VCES|
+                   --
+00000020  30 30 38 31 51 30 30 30  32 25 13 30 35 2f 31 32  |0081Q0002%.05/12|
+                                      --
+00000030  2f 32 30 31 38 20 31 30  3a 32 33 3a 32 31 26 01  |/2018 10:23:21&.|
+                                                     --
+00000040  01 27 03 58 30 31 28 1d  58 38 36 5f 36 34 2d 64  |.'.X01(.X86_64-d|
+             --             --
+00000050  65 6c 6c 65 6d 63 5f 6e  32 32 30 30 5f 6e 33 33  |ellemc_n2200_n33|
+00000060  33 38 2d 72 30 2a 02 00  80 2b 05 43 45 53 30 30  |38-r0*...+.CES00|
+                         --           --
+00000070  2c 02 43 4e 2d 08 44 65  6c 6c 20 45 4d 43 2f 07  |,.CN-.Dell EMC/.|
+          --          --                             --
+00000080  43 51 38 54 47 30 32 fd  04 00 00 02 a2 29 0a 33  |CQ8TG02......).3|
+                               --                 --
+00000090  2e 34 35 2e 31 2e 31 2d  34 2e 0b 33 2e 34 35 2e  |.45.1.1-4..3.45.|
+                                      --
+000000a0  33 2e 32 31 2d 30 24 06  d8 9e f3 ab 53 48 21 09  |3.21-0$.....SH!.|
+                            --                       --
+000000b0  4e 32 32 34 38 58 2d 4f  4e fe 04 57 29 96 c5 20  |N2248X-ON..W).. |
+                                      --(CRC-32)        
+000000c0  69 73 20 61 20 74 65 73  74 20 73 74 72 69 6e 67  |is a test string|
+000000d0  32 fe 04 9d 41 45 15 61  ff ff ff ff ff ff ff ff  |2...AE.a........|
+000000e0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+
+TLV EEPROM Data: Analyse TLV code
+-------------------------------------------------------------------------------
+       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f    0123456789abcdef
+00: [54 6c 76 49 6e 66 6f 00 01 00 b5] [21 0a 4e 32 32    TlvInfo.?.?!?N22
+     ----------------------- --         -----(Type:0x21, len=0xa)
+     TlvInfo                 Ver(0x01)
+                                -----  
+                                totallen(0x00b5)
+10: 32 34 50 58 2d 4f 4e] [22 06 30 34 56 34 37 56] [23    24PX-ON"?04V47V#
+                           -----(Type:0x22, len=0x6)
+                                                     -----(Type:0x23, len=0x14)
+20: 14 43 4e 30 34 56 34 37 56 43 45 53 30 30 38 31    ?CN04V47VCES0081
+30: 51 30 30 30 32] [25 13 30 35 2f 31 32 2f 32 30 31    Q0002%?05/12/201
+                     -----(Type:0x25, len=0x13)
+40: 38 20 31 30 3a 32 33 3a 32 31] [26 01 01] [27 03 58    8 10:23:21&??'?X
+                                    -----(Type:0x26, len=0x1)
+                                               -----(Type:0x27, len=0x3)
+50: 30 31] [28 1d 58 38 36 5f 36 34 2d 64 65 6c 6c 65    01(?X86_64-delle
+            -----(Type:0x28, len=0x1d)
+60: 6d 63 5f 6e 32 32 30 30 5f 6e 33 33 33 38 2d 72    mc_n2200_n3338-r
+70: 30] [2a 02 00 80] [2b 05 43 45 53 30 30] [2c 02 43 4e]    0*?.?+?CES00,?CN
+         -----(Type:0x2a, len=0x02)
+                       -----(Type:0x2b, len=0x05)
+                                              -----(Type:0x2c, len=0x02)
+80: [2d 08 44 65 6c 6c 20 45 4d 43] [2f 07 43 51 38 54    -?Dell EMC/?CQ8T
+     -----(Type:0x2d, len=0x08)      -----(Type:0x2f, len=0x07)
+90: 47 30 32] [fd 04 00 00 02 a2] [29 0a 33 2e 34 35 2e    G02??..??)?3.45.
+               -----(Type:0xfd, len=0x04)
+                                   -----(Type:0x29, len=0x0a)
+a0: 31 2e 31 2d 34] [2e 0b 33 2e 34 35 2e 33 2e 32 31    1.1-4.?3.45.3.21
+                     -----(Type:0x2e, len=0x0b)
+b0: 2d 30] [24 06 d8 9e f3 ab 53 48] [fe 04 78 3a 89 67]    -0$?????SH??x:?g
+            -----(Type:0x24, len=0x06)
+                                      -----(Type:0xfe, len=0x04)
+c0: 20 69 73 20 61 20 74 65 73 74 20 73 74 72 69 6e     is a test strin
+d0: 67 fe 04 22 21 da b2 ff ff ff ff ff ff ff ff ff    g??"!??.........
+e0: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff    ................
+f0: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff    ................
+
+
+
