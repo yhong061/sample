@@ -1,0 +1,6 @@
+#xmlAdduuid.c
+#Add xml info 
+#<uuid>
+#   <uuid_tag>xxx...</uuid_tag>
+#</uuid>
+gcc xmlAdduuid.c -o uuid -I/usr/include/libxml2 -lxml2;./uuid
