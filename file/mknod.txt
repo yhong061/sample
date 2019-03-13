@@ -1,0 +1,8 @@
+主设备号是由/usr/src/linux/include/linux/major.h定义的，如下定义了一个DOC设备： 
+#define IGEL_FLASH_MAJOR 62
+
+mknod doc b 62 0
+b指块设备
+
+mknod console c 5 1 
+c指字符设备 
