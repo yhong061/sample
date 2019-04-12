@@ -1,0 +1,119 @@
+ONIE-RECOVERY:/ # fdisk -l
+
+Disk /dev/sda: 30.7 GB, 30752636928 bytes
+28 heads, 23 sectors/track, 93266 cylinders
+Units = cylinders of 644 * 512 = 329728 bytes
+
+   Device Boot      Start         End      Blocks  Id System
+/dev/sda1   *           3           3         192  ef EFI (FAT-12/16/32)
+
+Disk /dev/sdb: 128.0 GB, 128035676160 bytes
+42 heads, 29 sectors/track, 205311 cylinders
+Units = cylinders of 1218 * 512 = 623616 bytes
+
+   Device Boot      Start         End      Blocks  Id System
+/dev/sdb1   *           1           3        1152  ef EFI (FAT-12/16/32)
+ONIE-RECOVERY:/ # fdisk /dev/sdb
+
+The number of cylinders for this disk is set to 205311.
+There is nothing wrong with that, but this is larger than 1024,
+and could in certain setups cause problems with:
+1) software that runs at boot time (e.g., old versions of LILO)
+2) booting and partitioning software from other OSs
+   (e.g., DOS FDISK, OS/2 FDISK)
+
+Command (m for help): d
+Selected partition 1
+
+Command (m for help): d
+No partition is defined yet!
+
+Command (m for help): d
+No partition is defined yet!
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table
+qONIE-RECOVERY:/ # gdisk /dev/sdb
+GPT fdisk (gdisk) version 0.8.8
+
+Caution: invalid main GPT header, but valid backup; regenerating main header
+from backup!
+
+Caution! After loading partitions, the CRC doesn't check out!
+Warning! Main partition table CRC mismatch! Loaded backup partition table
+instead of main partition table!
+
+Warning! One or more CRCs don't match. You should repair the disk!
+
+Partition table scan:
+  MBR: MBR only
+  BSD: not present
+  APM: not present
+  GPT: damaged
+
+Found valid MBR and corrupt GPT. Which do you want to use? (Using the
+GPT MAY permit recovery of GPT data.)
+ 1 - MBR
+ 2 - GPT
+ 3 - Create blank GPT
+
+Your answer: 1
+
+Command (? for help): ?
+b       back up GPT data to a file
+c       change a partition's name
+d       delete a partition
+i       show detailed information on a partition
+l       list known partition types
+n       add a new partition
+o       create a new empty GUID partition table (GPT)
+p       print the partition table
+q       quit without saving changes
+r       recovery and transformation options (experts only)
+s       sort partitions
+t       change a partition's type code
+v       verify disk
+w       write table to disk and exit
+x       extra functionality (experts only)
+?       print this menu
+
+Command (? for help): d
+No partitions
+
+Command (? for help): n
+Partition number (1-128, default 1): 1
+First sector (34-250069646, default = 2048) or {+-}size{KMGTP}:
+Last sector (2048-250069646, default = 250069646) or {+-}size{KMGTP}:
+Current type is 'Linux filesystem'
+Hex code or GUID (L to show codes, Enter = 8300):
+Changed type of partition to 'Linux filesystem'
+
+Command (? for help): w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): y
+OK; writing new GUID partition table (GPT) to /dev/sdb.
+The operation has completed successfully.
+ONIE-RECOVERY:/ # ls
+DiagOS_version.cfg
+README
+bin
+dev
+diag-installer-x86_64-dellemc_vep4600_d21xyt-r0-3.41.3.81-5-2019-02-17.bin
+etc
+init
+lib
+mnt
+proc
+root
+run
+sbin
+sys
+tmp
+usr
+var
+ONIE-RECOVERY:/ # onie-nos-install diag-installer-x86_64-dellemc_vep4600_d21xyt-
+r0-3.41.3.81-5-2019-02-17.bin

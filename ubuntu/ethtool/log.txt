@@ -1,0 +1,3 @@
+yhong@yhong-VirtualBox:~/sample/sample/ubuntu/ethtool$ ./test enp0s3
+Speed: 1Gbp/s  Full Duplex
+

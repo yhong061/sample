@@ -1,0 +1,115 @@
+
+===============================================================================
+sed -r 's/\x0//g' ./test1.log > test2.log  #^@就是\0 , 删除test1中的^@, 并将最终的结果写到test2中
+
+-------------------
+yhong@yhong-VirtualBox:~/sample/sample/file$ showkey -a
+
+按任意键 - Ctrl-D 将结束这个程序
+
+^@        0 0000 0x00
+^T       20 0024 0x14
+^Y       25 0031 0x19
+^M       13 0015 0x0d
+
+
+===============================================================================
+
+/*
+$0 for the whole line.
+$1 for the first field.
+$2 for the second field.
+$n for the nth field.
+*/
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx
+Device#26:  bus:dev.fn 04:00.0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/ / /g'
+Device#26:  bus:dev.fn 04:00.0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g'
+Device#26   bus dev.fn 04 00.0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g'
+Device#26   bus dev fn 04 00 0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $5}'
+04
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $0}'
+Device#26   bus dev fn 04 00 0 - ID=0x702110ee, Xilinx Artix-7 FPGA XC7A35T
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $1}'
+Device#26
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $4}'
+fn
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $3}'
+dev
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $2}'
+bus
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $6}'
+00
+
+root@dellemc-diag-os:/mnt/tdc# pcitool --scan | grep Xilinx | sed 's/:/ /g' | sed 's/\./ /g' | awk '{print $7}'
+0
+
+===============================================================================
+sed -i "s/要找查找的文本/替换后的文本/g" `grep -rl "要找查找的文本" ./`
+
+sed -i "s/entry point at 0x[0-9a-f]\{8\}/ /g" `grep -rl "entry point at "` ./log_*
+
+
+===============================================================================
+1. According ethtool to get eth0 bus-info (eth0 is pci device in x86)
+-------------------
+root@dellemc-diag-os:~# ethtool -i eth0
+driver: igb
+version: 5.4.0-k
+firmware-version: 3.25, 0x800005cc
+bus-info: 0000:03:00.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: yes
+supports-register-dump: yes
+supports-priv-flags: no
+
+root@dellemc-diag-os:~# ethtool -i eth0 | grep bus-info
+bus-info: 0000:03:00.0
+
+root@dellemc-diag-os:~# ethtool -i eth0 | grep bus-info | sed -e 's/bus-info: //'
+0000:03:00.0
+
+2. Read eth0 pci bus to get eth0 device ID
+-------------------
+root@dellemc-diag-os:~# lspci -s 0000:03:00.0 -x
+03:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+00: 86 80 33 15 47 05 10 00 03 00 00 02 10 00 00 00
+10: 00 00 d0 df 00 00 00 00 01 d0 00 00 00 00 d8 df
+20: 00 00 00 00 00 00 00 00 00 00 00 00 ff ff 00 00
+30: 00 00 00 00 40 00 00 00 00 00 00 00 0b 01 00 00
+
+root@dellemc-diag-os:~# lspci -s 0000:03:00.0 -x | head -n 2
+03:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+00: 86 80 33 15 47 05 10 00 03 00 00 02 10 00 00 00
+
+root@dellemc-diag-os:~# lspci -s 0000:03:00.0 -x | head -n 2 | tail -n 1
+00: 86 80 33 15 47 05 10 00 03 00 00 02 10 00 00 00
+
+root@dellemc-diag-os:~# lspci -s 0000:03:00.0 -x | head -n 2 | tail -n 1 | awk '{print $5$4$3$2}'
+15338086
+
+
+
+===============================================================================
+
+
+sed -i 's/signal/temp/g' /usr/local/bin/test.txt  	//将文件test.txt中的signal替换成temp
+sed -i "s/signal/temp/g" /usr/local/bin/test.txt  	//将文件test.txt中的signal替换成temp
+
+
+sed -i s/signal/temp/g `grep signal -rl --include="*.txt" ./` 	//在./目录下文件类型为txt的文件中搜索signal字串，并将signal替换成temp

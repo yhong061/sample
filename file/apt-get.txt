@@ -1,3 +1,26 @@
+usr/bin/ld: cannot find -lfreeipmi
+
+解决方法:
+yhong@yhong-VirtualBox:~/sample/sample/file$ sudo apt-cache  search freeipmi   //search freeipmi 
+freeipmi-common - GNU implementation of the IPMI protocol - common files
+freeipmi-tools - GNU implementation of the IPMI protocol - tools
+libfreeipmi-dev - GNU IPMI - development package
+libfreeipmi16 - GNU IPMI - libraries
+libipmiconsole-dev - GNU IPMI - ipmiconsole development package
+libipmiconsole2 - GNU IPMI - Serial-over-Lan library
+libipmidetect-dev - GNU IPMI - ipmidetect development package
+libipmidetect0 - GNU IPMI - IPMI node detection library
+libipmimonitoring-dev - GNU IPMI - ipmimonitoring development package
+libipmimonitoring5a - GNU IPMI - Sensor monitoring library
+conman - serial console management program
+freeipmi - GNU implementation of the IPMI protocol
+freeipmi-bmc-watchdog - GNU implementation of the IPMI protocol - BMC watchdog
+freeipmi-ipmidetect - GNU IPMI - IPMI node detection tool
+freeipmi-ipmiseld - GNU IPMI - IPMI node detection tool
+yhong@yhong-VirtualBox:~/sample/sample/file$ sudo apt-get install libfreeipmi-dev
+
+=======================================
+
 apt-cache search package 搜索软件包
 apt-cache show package  获取包的相关信息，如说明、大小、版本等
 sudo apt-get install package 安装包

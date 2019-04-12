@@ -1,41 +1,54 @@
+find . -name ".git*" | xargs rm -rf  //force to delete .git* directory
+-------------------------------------------------------------
+  
   git cherry-pick  8168fb32d64fff496f1b6db7063e8d1bd4a5147c
        //将其他分支的指定commit-id分支同步到当前分支
-  -------------------------------------------------------------
-  
-  593  git status
-    594  git commit -asm "add driver xc6130"
-      595  git status
-        596  git log 
-	  597  git branch 
-	    598  git checkout dev
-	      599  git log
-	        600  git show -p
-		  601  rm test 
-		    602  git status
-		      603  git rm test
-		        604  git status
-			  605  git commit -asm "revert to top tree "
-			    606  git log 
-			      607  git pull
-			        608  git branch 
-				  609  git checkout yhong
-				    610  git log
+-------------------------------------------------------------
+ 
+ git revert --no-commit 4ba0241da38d1117a04f23bde23c9bafa89b7330  //还原这个commid-id的内容到本地，如果有冲突，需要解决
+ git revert --no-commit 90bfb3bb0301ddff4b5265e239dd0dbe1b92126c
+ git revert --no-commit 87b7c9af85cdb205fe46c80e8e3485808e0f7823
+ git revert --no-commit 7519eaa27c510c757873a3224684a110b642f1d9
+ git revert --no-commit fcdee6c5b6838c9ebfc4d80fd278b8091931cba9
+ git status  //显示本地的还原代码
+ git revert --continue  //将这些commit-id的内存删除，并创建删除的commid-id
+ git log --oneline --graph
+
+-------------------------------------------------------------
+593  git status
+594  git commit -asm "add driver xc6130"
+595  git status
+596  git log 
+597  git branch 
+598  git checkout dev
+599  git log
+600  git show -p
+601  rm test 
+602  git status
+603  git rm test
+604  git status
+605  git commit -asm "revert to top tree "
+606  git log 
+607  git pull
+608  git branch 
+609  git checkout yhong
+610  git log
 ------------------------------------------------
 git push gl5209 yhong1:review/TB_ipc_ov2718
 
 531  git branch 
-    532  git status
-      533  git diff 
-        534  git reset --hard
-	  535  git status
-	    536  git fetch gl5209
-	      537  git branch -a | grep ov2718
-	        538  git checkout -b ov2718remotes/gl5209/review/TB_ipc_ov2718
-		  539  git checkout -b ov2718 remotes/gl5209/review/TB_ipc_ov2718
-		    540  git branch 
-		      541  git branch -D ov2718remotes/gl5209/review/TB_ipc_ov2718
-		        542  git branch 
-			  543  git log 
+532  git status
+533  git diff 
+534  git reset --hard
+535  git status
+536  git fetch gl5209
+537  git branch -a | grep ov2718
+538  git checkout -b ov2718remotes/gl5209/review/TB_ipc_ov2718
+539  git checkout -b ov2718 remotes/gl5209/review/TB_ipc_ov2718
+540  git branch 
+541  git branch -D ov2718remotes/gl5209/review/TB_ipc_ov2718
+542  git branch 
+543  git log 
 
 ------------------------------------------------
   639  git branch 
