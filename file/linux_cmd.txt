@@ -2,6 +2,9 @@
 ===============================================================================
 scp /home/daisy/full.tar.gz root@172.19.2.75:/home/root
 scp root@/172.19.2.75:/home/root/full.tar.gz home/daisy/full.tar.gz
+
+sshpass -p dellforce10 /usr/bin/scp dellforce10@210.13.66.182:/home/dellforce10/yana/5212.sh .
+
 ===============================================================================
 543  sudo apt-cache search opencv
 544  sudo apt-cache search opencv |grep 264
