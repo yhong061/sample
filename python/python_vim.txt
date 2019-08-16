@@ -1,7 +1,0 @@
-
----------------------------------------
-create tag for python
----------------------------------------
-cp Python-3.7.0/Tools/scripts/ptags.py ~/
-python ptags.py *
-
